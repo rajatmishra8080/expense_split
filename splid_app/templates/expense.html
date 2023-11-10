@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Add Your Expense{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .expense-form {
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="expense-form">
+        <h1>Add Your Expenditure</h1>
+        <form action="" method="POST">
+        {% csrf_token %}
+            <label for="expenseDate">Date:</label>
+            <input type="date" id="expenseDate" name="expenseDate" required>
+
+            <label for="expenseTitle">Title:</label>
+            <input type="text" id="expenseTitle" name="expenseTitle" required>
+
+            <label for="expenseAmount">Amount:</label>
+            <input type="text" id="expenseAmount" name="expenseAmount" required>
+
+            <label for="expenseBy">Expense By:</label>
+            <select id="expenseBy" name="expenseBy" placeholder="please select member" required>
+            {% for i in out %}
+                <option value="{{ i.fname }}">{{ i.fname }}</option>
+                {% endfor %}
+                <!-- Add more options as needed -->
+            </select>
+
+            <button type="submit" id="saveButton">Save</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

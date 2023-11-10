@@ -1,0 +1,48 @@
+<!-- simplify_expenses.html -->
+{% extends "base.html" %}
+{% block title %}simplify_expenses{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplified Expenses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Simplified Expenses</h1>
+    
+{% for simplified_expense in simplified_expenses %}
+<p>
+    {% if simplified_expense.settleAmount > 0 %}
+        {{ simplified_expense.expenseBy }} need to pay ${{ simplified_expense.settleAmount|stringformat:"0.2f"|floatformat }} to others
+    {% else %}
+        {{ simplified_expense.expenseBy }} will get {{ simplified_expense.settleAmount|stringformat:"0.2f"|floatformat }}$
+    {% endif %}
+</p>
+{% endfor %}
+        
+
+</body>
+</html>
+{% endblock %}

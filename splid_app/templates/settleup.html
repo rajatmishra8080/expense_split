@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Settle Up Report{% endblock %}
+{% block content %}
+<!-- settle_up_report.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settle Up Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        #reset-button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            }
+
+        #reset-button:hover {
+            background-color: #d32f2f;
+            }
+
+    </style>
+</head>
+<body>
+
+    <h1>Settle Up Report</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Total Expense</th>
+                <th>Settle Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for settle_data in settle_up_data %}
+            <tr>
+                <td>{{ settle_data.expenseBy }}</td>
+                <td>{{ settle_data.totalExpense }}</td>
+                <td>{% if settle_data.settleAmount > 0 %}
+                        You owe {{ settle_data.settleAmount|stringformat:"0.2f"|floatformat }}
+                    {% else %}
+                        You are owed {{ settle_data.settleAmount|stringformat:"0.2f"|floatformat }}
+                    {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button id="reset-button">Reset Records</button>
+    <script>
+        document.getElementById('reset-button').addEventListener('click', function() {
+        if (confirm('Are you sure you want to reset all records?')) {
+        fetch('/reset-records/', {
+        method: 'POST',
+        headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+        })
+        .then(response => {
+        if (response.ok) {
+        alert('All records have been reset');
+        // You can also reload the page or update the UI as needed
+        } else {
+        alert('Failed to reset records');
+        }
+        })
+        .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while resetting records');
+        });
+        }});
+        </script>
+
+</body>
+</html>
+{% endblock %}

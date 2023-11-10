@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}home{% endblock %}
+{% block content %}
+<html>
+<head>
+<style>
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+.btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+{% for i in out %}
+<div class="card">
+  <div class="container">
+  <ul>
+    <li><b>ID :</b> {{ i.id }}</li>
+    <li><b>Name :</b> {{ i.fname }}</li>
+    <li><b>Mobile No.:</b> {{ i.phone }}</li>
+    <li><b>Email :</b> {{ i.email }}</li>
+  </ul>
+  </div>
+</div>
+{% endfor %}
+<a href="{% url 'addcontact' %}"><button class="btn"><b>+</b> Add Member</button></a>
+</body>
+</html>
+{% endblock %}

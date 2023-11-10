@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Expense Overview{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Expense Overview</h1>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Expense By</th>
+            <th>Expense</th>
+            <th>Expense Name</th>
+        </tr>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.expenseDate }}</td>
+            <td>{{ expense.expenseBy }}</td>
+            <td>${{expense.expenseAmount}}</td>
+            <td>{{ expense.expenseTitle }}</td>
+            
+        </tr>
+        {% endfor %}
+        <tr>
+            <th><b>Expense Summary</b></th>
+            <th><b>Sharing Person : </b>{{ num_people }}</th>
+            <th>Total Expenses : <b>${{ total_expense }}</b></th>
+            <th>Sharing Amount : <b>${{ sharing_amount }}</b></th>
+        </tr>
+        <!-- Add more rows as needed -->
+    </table>
+    <a href="{% url 'settleup' %}"><button id="settleButton">Settle Up</button></a>
+    <a href="{% url 'expense' %}"><button id="newExpenseButton">New Expense</button></a>
+    <a href="{% url 'simplify' %}"><button id="newExpenseButton">Simplify Sharing</button></a>
+</body>
+</html>
+{% endblock %}
